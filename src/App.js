@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchBooks } from './redux/actions';
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchBooks());
+  }
+
   render() {
     return (
       <div className="App">
@@ -25,4 +31,9 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  const { booksBySubject } = state;
+  return { booksBySubject };
+}
+
+export default connect(mapStateToProps)(App);
