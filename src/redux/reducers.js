@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 import {
     REQUEST_BOOKS,
-    RECEIVE_BOOKS
+    RECEIVE_BOOKS,
+    REQUEST_SUBJECTS,
+    RECEIVE_SUBJECTS
 } from './actions';
 
 const books = (state = { isFetching: false, items: [] }, action ) => {
@@ -28,8 +30,20 @@ const booksBySubject = (state = {}, action) => {
     }
 }
 
+const subjects = (state = { isFetching: false, items: [] }, action ) => {
+    switch (action.type) {
+        case REQUEST_SUBJECTS:
+            return {...state, isFetching: true};
+        case RECEIVE_SUBJECTS: 
+            return {...state, isFetching: false, items: action.subjects};
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
-    booksBySubject
+    booksBySubject,
+    subjects
 });
 
 export default rootReducer;

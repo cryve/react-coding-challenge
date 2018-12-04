@@ -1,30 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchBooks } from './redux/actions';
-import logo from './logo.svg';
+import { Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { fetchBooks, fetchSubjects } from './redux/actions';
 import './App.css';
 
 class App extends Component {
+  state = {
+    subject: ''
+  };
+
   componentDidMount() {
     this.props.dispatch(fetchBooks());
+    this.props.dispatch(fetchSubjects());
+  }
+
+  handleSubjectChange = event => {
+    this.setState({ subject: event.target.value });
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <Typography component="h1" variant="h4" align="center">
+            Choose a subject
+          </Typography>
+          <form>
+            <FormControl>
+              <InputLabel htmlFor="subject">Subject</InputLabel>
+              <Select
+                value={this.state.subject}
+                onChange={this.handleSubjectChange}
+                inputProps={{
+                  name: 'subject',
+                  id: 'subject'
+                }}
+              >
+                {this.props.subjects.items.map(subject => (
+                  <MenuItem key={subject} value={subject}>{subject}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </form>
         </header>
       </div>
     );
@@ -32,8 +49,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { booksBySubject } = state;
-  return { booksBySubject };
+  const { booksBySubject, subjects } = state;
+  return { booksBySubject, subjects };
 }
 
 export default connect(mapStateToProps)(App);
