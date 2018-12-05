@@ -4,7 +4,8 @@ import {
   RECEIVE_BOOKS,
   REQUEST_SUBJECTS,
   RECEIVE_SUBJECTS,
-  SELECT_SUBJECT
+  SELECT_SUBJECT,
+  SELECT_BOOK
 } from './actions';
 
 const books = (state = { isFetching: false, items: [] }, action ) => {
@@ -42,14 +43,16 @@ const subjects = (state = { isFetching: false, items: [] }, action ) => {
   }
 }
 
-const selections = (state = { subject: '' }, action) => {
+const selections = (state = { subject: '', bookIndex: -1 }, action) => {
   switch (action.type) {
     case SELECT_SUBJECT:
-      return { ...state, subject: action.subject };
+      return { ...state, subject: action.subject, bookIndex: -1 };
+    case SELECT_BOOK:
+      return { ...state, bookIndex: action.bookIndex };
     default: 
       return state;
   }
-}
+};
 
 const rootReducer = combineReducers({
   booksBySubject,

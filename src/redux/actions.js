@@ -3,6 +3,7 @@ export const RECEIVE_BOOKS = 'RECEIVE_BOOKS';
 export const REQUEST_SUBJECTS = 'REQUEST_SUBJECTS';
 export const RECEIVE_SUBJECTS = 'RECEIVE_SUBJECTS';
 export const SELECT_SUBJECT = 'SELECT_SUBJECT';
+export const SELECT_BOOK = 'SELECT_BOOK';
 
 const JSON_ENDPOINT = 'http://localhost:3010';
 
@@ -67,4 +68,9 @@ export const fetchSubjects = () => {
 export const selectSubject = (subject) => ({
   type: SELECT_SUBJECT,
   subject
+});
+
+export const selectBookIndex = (bookIndex) => ({
+  type: SELECT_BOOK,
+  bookIndex
 });
