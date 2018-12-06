@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { TextField, Typography } from '@material-ui/core';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { TextField, Typography, FormControl, InputLabel, Select, Chip, MenuItem, OutlinedInput } from '@material-ui/core';
 
 class BookInfo extends Component {
   state = { ...this.props.initialValues };
   
+  componentDidMount() {
+    this.forceUpdate();
+  }
+
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -47,10 +53,47 @@ class BookInfo extends Component {
             margin="normal"
             variant="outlined"
           />
+          <FormControl margin="normal" variant="outlined">
+            <InputLabel
+              htmlFor="subjects"
+              ref={(ref) => {
+                this.subjectLabelRef = ReactDOM.findDOMNode(ref);
+              }}
+            >
+              Subjects
+            </InputLabel>
+            <Select
+              name="subjects"
+              multiple
+              value={this.state.subjects}
+              onChange={this.handleChange}
+              input={
+                <OutlinedInput
+                  id="subjects"
+                  labelWidth={this.subjectLabelRef ? this.subjectLabelRef.offsetWidth : 0}
+                />
+              }
+              renderValue={(selected) => (
+                <div>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </div>
+              )}
+            >
+              {this.props.subjects.items.map(subject => (
+                <MenuItem key={subject} value={subject}>{subject}</MenuItem>
+              ))}
+            </Select>   
+          </FormControl>
         </form>
       </React.Fragment>
     )
   }
 }
 
-export default BookInfo;
+const mapStateToProps = (state) => ({
+  subjects: state.subjects
+});
+
+export default connect(mapStateToProps)(BookInfo);
