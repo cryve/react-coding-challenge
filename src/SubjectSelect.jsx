@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Typography, MenuItem, TextField } from '@material-ui/core';
 import { fetchSubjects, selectSubject } from './redux/actions';
 
 class SubjectSelect extends Component {
@@ -19,22 +19,19 @@ class SubjectSelect extends Component {
           Choose a subject
         </Typography>
         <form>
-          <FormControl>
-            <InputLabel htmlFor="subject">Subject</InputLabel>
-            <Select
-              value={this.props.selectedSubject}
-              onChange={this.handleSubjectChange}
-              inputProps={{
-                name: 'subject',
-                id: 'subject'
-              }}
-            >
-              <MenuItem value=''></MenuItem>
-              {this.props.subjects.items.map(subject => (
-                <MenuItem key={subject} value={subject}>{subject}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField
+            select
+            label="Subject"
+            value={this.props.selectedSubject}
+            onChange={this.handleSubjectChange}
+            margin="normal"
+            variant="outlined"
+          >
+            <MenuItem value=''></MenuItem>
+            {this.props.subjects.items.map(subject => (
+              <MenuItem key={subject} value={subject}>{subject}</MenuItem>
+            ))}
+          </TextField>
         </form>
       </React.Fragment>
     )
