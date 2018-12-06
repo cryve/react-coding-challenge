@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { TextField, Typography, FormControl, InputLabel, Select, Chip, MenuItem, OutlinedInput } from '@material-ui/core';
 import ChipInput from 'material-ui-chip-input';
 import Formats from './Formats';
+import Authors from './Authors';
 
 class BookInfo extends Component {
   state = { ...this.props.initialValues };
@@ -23,6 +24,15 @@ class BookInfo extends Component {
   handleFormatUrlChange = (event) => {
     this.setState({
       formats: { ...this.state.formats, [event.target.name]: event.target.value }
+    });
+  }
+
+  handleAuthorsChange = (event, index) => {
+    const updatedAuthor = { ...this.state.authors[index], [event.target.name]: event.target.value };
+    const updatedAuthors = [ ...this.state.authors ];
+    updatedAuthors.splice(index, 1, updatedAuthor);
+    this.setState({
+      authors: updatedAuthors
     });
   }
 
@@ -113,6 +123,10 @@ class BookInfo extends Component {
           <Formats
             formats={this.state.formats}
             handleFormatUrlChange={this.handleFormatUrlChange}
+          />
+          <Authors
+            authors={this.state.authors}
+            handleAuthorsChange={this.handleAuthorsChange}
           />
         </form>
       </React.Fragment>

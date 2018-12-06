@@ -28,7 +28,7 @@ const Formats = ({
       </List>
     </React.Fragment>
     
-  )
-}
+  );
+};
 
 export default Formats;
