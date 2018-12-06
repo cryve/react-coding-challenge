@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { TextField, Typography, FormControl, InputLabel, Select, Chip, MenuItem, OutlinedInput } from '@material-ui/core';
 import ChipInput from 'material-ui-chip-input';
+import Formats from './Formats';
 
 class BookInfo extends Component {
   state = { ...this.props.initialValues };
@@ -17,6 +18,12 @@ class BookInfo extends Component {
 
   handleChipInputChange = (values, field) => {
     this.setState({ [field]: values });
+  }
+
+  handleFormatUrlChange = (event) => {
+    this.setState({
+      formats: { ...this.state.formats, [event.target.name]: event.target.value }
+    });
   }
 
   render() {
@@ -102,6 +109,10 @@ class BookInfo extends Component {
             variant="outlined"
             defaultValue={this.state.bookshelves}
             onChange={(chips) => this.handleChipInputChange(chips, 'bookshelves')}
+          />
+          <Formats
+            formats={this.state.formats}
+            handleFormatUrlChange={this.handleFormatUrlChange}
           />
         </form>
       </React.Fragment>
