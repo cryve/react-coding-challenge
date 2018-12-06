@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { TextField, Typography, FormControl, InputLabel, Select, Chip, MenuItem, OutlinedInput } from '@material-ui/core';
+import ChipInput from 'material-ui-chip-input';
 
 class BookInfo extends Component {
   state = { ...this.props.initialValues };
@@ -12,6 +13,10 @@ class BookInfo extends Component {
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleChipInputChange = (values, field) => {
+    this.setState({ [field]: values });
   }
 
   render() {
@@ -86,6 +91,18 @@ class BookInfo extends Component {
               ))}
             </Select>   
           </FormControl>
+          <ChipInput
+            label="Languages"
+            variant="outlined"
+            defaultValue={this.state.languages}
+            onChange={(chips) => this.handleChipInputChange(chips, 'languages')}
+          />
+          <ChipInput
+            label="Bookshelves"
+            variant="outlined"
+            defaultValue={this.state.bookshelves}
+            onChange={(chips) => this.handleChipInputChange(chips, 'bookshelves')}
+          />
         </form>
       </React.Fragment>
     )
